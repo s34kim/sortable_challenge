@@ -265,11 +265,11 @@ namespace sortable_challenge
             {
                 outfile.WriteLine(serializer.Serialize(current_result));
                 outfile.Flush();
-            }//foreach
+            }
 
+            // tell us the run time (6mins on my computer)
             timer.Stop();
-            Console.WriteLine("Complete after " + timer.Elapsed + " seconds!");
-            Console.ReadLine();
+            Console.WriteLine("Completed in " + timer.Elapsed + "!");
         }
     }
 }
