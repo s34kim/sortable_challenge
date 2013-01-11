@@ -151,6 +151,10 @@ namespace sortable_challenge
             StreamReader products_file = new StreamReader(products_file_name);
             product current_product = new product();
             linecounter = 0;
+            Regex containsletters = new Regex(@"[a-zA-Z]+?");
+            Regex containsnumbers = new Regex(@"[0-9]+?");
+            Regex isaword = new Regex(@"^[a-zA-Z]+$");
+            Regex isanumber = new Regex(@"^[0-9]+$");
             while ((line = products_file.ReadLine()) != null)
             {
                 bool readsuccess = true;
@@ -194,7 +198,7 @@ namespace sortable_challenge
                         // finally check if the listing title contains the model
                         // first we check if the model is a mixture of letters and numbers, 
                         // which makes a strong match easy
-                        if (Regex.IsMatch(current_product.model, @"[a-zA-Z]+") && Regex.IsMatch(current_product.model, @"[0-9]+"))
+                        if (containsletters.IsMatch(current_product.model) && containsnumbers.IsMatch(current_product.model))
                         {
                             // This used to be a fully regex expression looking for spaces, but this took WAY
                             // too long so I switched it back to a *.Contains(*)
@@ -227,13 +231,13 @@ namespace sortable_challenge
                         }
                         // only letters so we want it to match with whitespace around the model
                         // less points, so we also need a family match
-                        else if (Regex.IsMatch(current_product.model, @"^[a-zA-Z]+$"))
+                        else if (isaword.IsMatch(current_product.model))
                         {
                             if (Regex.IsMatch(current_listing.title.ToLower(), @"[\s_-]" + current_product.model + @"[$\s_-]"))
                                 points = points + 0.8;
                         }
                             // only numbers, but same as above
-                        else if (Regex.IsMatch(current_product.model, @"^[0-9]+$"))
+                        else if (isanumber.IsMatch(current_product.model))
                         {
                             if (Regex.IsMatch(current_listing.title.ToLower(), @"[\s_-]" + current_product.model + @"[$\s_-]"))
                                 points = points + 0.8;
@@ -270,6 +274,7 @@ namespace sortable_challenge
             // tell us the run time (6mins on my computer)
             timer.Stop();
             Console.WriteLine("Completed in " + timer.Elapsed + "!");
+            Console.ReadLine();
         }
     }
 }
