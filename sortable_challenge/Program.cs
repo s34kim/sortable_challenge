@@ -274,7 +274,6 @@ namespace sortable_challenge
             // tell us the run time (6mins on my computer)
             timer.Stop();
             Console.WriteLine("Completed in " + timer.Elapsed + "!");
-            Console.ReadLine();
         }
     }
 }
